@@ -1,149 +1,127 @@
 # URL Shortener
 
-A full-stack URL shortener with JWT authentication, click tracking, and a dashboard to manage your links.
+A web-based URL Shortener built using Python, Flask, and MySQL that converts long URLs into compact, shareable links.
+
+## Features
+
+- Converts long URLs into short, shareable links.
+- Generates unique short codes for URLs.
+- Redirects users to the original URL using the shortened link.
+- Stores URL mappings in a MySQL database.
+- Provides backend APIs for URL creation, retrieval, and redirection.
+- Includes a web interface built with HTML, CSS, and JavaScript.
 
 ## Tech Stack
 
-| Layer    | Technology                          |
-| -------- | ----------------------------------- |
-| Frontend | React, Vite, React Router, Axios    |
-| Backend  | Node.js, Express.js                 |
-| Database | MySQL                               |
-| ORM      | Sequelize                           |
-| Auth     | JWT + bcrypt                        |
+- **Python** – Backend programming
+- **Flask** – Web framework and API development
+- **MySQL** – Database for storing URL mappings
+- **HTML** – Web page structure
+- **CSS** – Styling
+- **JavaScript** – Frontend interactivity
+
+## How It Works
+
+1. The user enters a long URL.
+2. The Flask backend generates a unique short code.
+3. The original URL and short code are stored in MySQL.
+4. The application generates a shortened URL.
+5. When the shortened URL is accessed, the user is redirected to the original URL.
 
 ## Project Structure
 
-```
-urlShortner/
-├── client/          # React frontend (Vite)
-├── server/          # Express API backend
+```text
+URL-Shortener/
+├── app.py
+├── templates/
+│   └── index.html
+├── static/
+│   ├── style.css
+│   └── script.js
+├── requirements.txt
 ├── .gitignore
 └── README.md
 ```
 
+*Note: Update the structure to match your actual project files.*
+
 ## Prerequisites
 
-- **Node.js** 18 or higher
-- **MySQL** 8 or higher
+- Python 3.x
+- MySQL Server
+- pip
 
-## Setup
+## Installation and Setup
 
-### 1. Clone and install dependencies
-
-```bash
-# Install server dependencies
-cd server
-npm install
-
-# Install client dependencies
-cd ../client
-npm install
-```
-
-### 2. Set up MySQL
-
-Create a database for the application:
-
-```sql
-CREATE DATABASE url_shortener;
-```
-
-### 3. Configure environment variables
-
-**Server** — copy the example file and fill in your values:
+### 1. Clone the Repository
 
 ```bash
-cd server
-cp .env.example .env   # On Windows: copy .env.example .env
+git clone <your-repository-url>
+cd URL-Shortener
 ```
 
-Edit `server/.env`:
-
-```env
-PORT=5000
-NODE_ENV=development
-
-DB_HOST=localhost
-DB_PORT=3306
-DB_NAME=url_shortener
-DB_USER=root
-DB_PASSWORD=your_mysql_password
-
-JWT_SECRET=your_super_secret_jwt_key_change_in_production
-JWT_EXPIRES_IN=7d
-
-CLIENT_URL=http://localhost:5173
-BASE_URL=http://localhost:5000
-```
-
-**Client** — copy the example file:
+### 2. Create a Virtual Environment
 
 ```bash
-cd client
-cp .env.example .env   # On Windows: copy .env.example .env
+python -m venv venv
 ```
 
-Edit `client/.env`:
+Activate the environment:
 
-```env
-VITE_API_URL=http://localhost:5000/api
-VITE_SHORT_URL_BASE=http://localhost:5000
-```
-
-### 4. Run the application
-
-Open two terminal windows:
-
-**Terminal 1 — Backend:**
+**Windows**
 
 ```bash
-cd server
-npm run dev
+venv\Scripts\activate
 ```
 
-The server starts at `http://localhost:5000`. Sequelize will automatically create the database tables on first run.
-
-**Terminal 2 — Frontend:**
+**Linux/macOS**
 
 ```bash
-cd client
-npm run dev
+source venv/bin/activate
 ```
 
-The app opens at `http://localhost:5173`.
+### 3. Install Dependencies
 
-## API Endpoints
-
-| Method | Endpoint            | Auth | Description                    |
-| ------ | ------------------- | ---- | ------------------------------ |
-| POST   | `/api/auth/signup`  | No   | Register a new user            |
-| POST   | `/api/auth/login`   | No   | Login and receive JWT          |
-| GET    | `/api/auth/me`      | Yes  | Get current user profile       |
-| POST   | `/api/urls`         | Yes  | Create a shortened URL         |
-| GET    | `/api/urls`         | Yes  | List user's URLs               |
-| PUT    | `/api/urls/:id`     | Yes  | Update URL destination/alias   |
-| DELETE | `/api/urls/:id`     | Yes  | Delete a URL                   |
-| GET    | `/:shortCode`       | No   | Redirect to original URL       |
-
-All authenticated endpoints require the header:
-
-```
-Authorization: Bearer <your_jwt_token>
+```bash
+pip install -r requirements.txt
 ```
 
-## Features
+### 4. Configure the Database
 
-- **Authentication** — Sign up, log in, JWT-protected routes
-- **URL shortening** — Auto-generated short codes (nanoid) or custom aliases
-- **Click tracking** — Counter increments on every redirect visit
-- **Dashboard** — View, edit, delete, and copy short URLs
-- **Validation** — Input validation on both frontend and backend
+- Start your MySQL server.
+- Create a database for the application.
+- Create the required table for storing original URLs and short codes.
+- Configure the database connection in your Flask application.
 
-## Production Notes
+### 5. Run the Application
 
-- Replace `sequelize.sync()` with proper migrations for production
-- Use a strong, unique `JWT_SECRET`
-- Set `NODE_ENV=production`
-- Build the frontend with `cd client && npm run build`
+```bash
+python app.py
+```
+
+Open the local URL displayed in your terminal, usually:
+
+```text
+http://127.0.0.1:5000/
+```
+
+## API Functionality
+
+| Functionality | Description |
+|---|---|
+| URL Creation | Generates a short link from a long URL. |
+| URL Retrieval | Retrieves the original URL using a short code. |
+| URL Redirection | Redirects users to the original URL. |
+
+## Future Enhancements
+
+- Add URL validation and improved error handling.
+- Implement click tracking and URL analytics.
+- Support custom short codes.
+- Add user authentication.
+- Deploy the application online.
+
+## Author
+
+**Your Name**
 
